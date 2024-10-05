@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-5">
+  <h2>Checkout</h2>
+  <form method="post" class="mb-4">
+    {% csrf_token %}
+    <div class="card p-4">
+      <h4>Shipping Information</h4>
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary mt-3">Place Order</button>
+    </div>
+  </form>
+
+  <h3>Cart Summary</h3>
+  <div class="card">
+    <ul class="list-group list-group-flush">
+      {% for item in cart %}
+      <li class="list-group-item">
+        {{ item.product.name }} - {{ item.quantity }} x ${{
+        item.price|floatformat:2 }} = ${{ item.total_price|floatformat:2 }}
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="card-body">
+      <h5 class="card-title">
+        Total: ${{ cart.get_total_price|floatformat:2 }}
+      </h5>
+    </div>
+  </div>
+</div>
+{% endblock %}
